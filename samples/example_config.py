@@ -3,6 +3,8 @@ import AWS.S3 as S3
 import CB.Types as Types
 
 # how to whitelist/blacklist nodes????
+# Whitelist can be done by specifying a literal whitelist in this file and 
+# using it in the heuristic
 
 class OPS:
 
