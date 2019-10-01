@@ -2,6 +2,8 @@
 Baseclass for Resource
 """
 
-class Resource(object):
+from abc import ABC, abstractmethod
+
+class Resource(ABC):
     def __init__(self):
         return
