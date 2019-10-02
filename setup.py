@@ -35,7 +35,7 @@ setup(
     package_dir={"": "src"},
     packages=find_packages(
         where="src",
-        exclude=["docs", "tests*"],
+        exclude=["docs", "tests*", "bin"],
     ),
-    zipsafe=False
+    zip_safe=False
 )
