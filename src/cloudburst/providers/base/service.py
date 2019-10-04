@@ -22,10 +22,3 @@ class Service(ABC):
         Fetch all of the resources for the service
         """
         pass
-
-    @abstractmethod
-    def __iter__(self):
-        """
-        Iterate over resources available in the service
-        """
-        pass
