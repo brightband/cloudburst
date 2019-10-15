@@ -5,3 +5,6 @@ dist
 .DS_Store
 .idea
 .idea/*
+__pycache__
+.pytest_cache
+*.sw*

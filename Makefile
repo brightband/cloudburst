@@ -1,15 +1,14 @@
-.PHONY: test build publish clean
+.PHONY: test test-unit develop publish clean
 
 PYTHON_VERSION ?= python3
 
-test: build
-
-build:
+test-unit:
+	python3 -m pytest -s tests/unit/*.py
 
 publish: test
 
 develop:
-	$(PYTHON_VERSION) setup.py install
+	$(PYTHON_VERSION) setup.py develop
 
 clean:
 	rm -rf dist

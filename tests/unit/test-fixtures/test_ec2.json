@@ -1,0 +1,110 @@
+{
+  "Monitoring": {
+    "State": "disabled"
+  },
+  "PublicDnsName": "ec2-54-191-5-109.us-west-2.compute.amazonaws.com",
+  "State": {
+    "Code": 16,
+    "Name": "running"
+  },
+  "EbsOptimized": false,
+  "LaunchTime": "2019-10-14T05:18:01.000Z",
+  "PublicIpAddress": "54.191.5.109",
+  "PrivateIpAddress": "172.31.19.50",
+  "ProductCodes": [],
+  "VpcId": "vpc-3f990858",
+  "CpuOptions": {
+    "CoreCount": 1,
+    "ThreadsPerCore": 1
+  },
+  "StateTransitionReason": "",
+  "InstanceId": "i-0e3f41b57129a2744",
+  "EnaSupport": true,
+  "ImageId": "ami-04b762b4289fba92b",
+  "PrivateDnsName": "ip-172-31-19-50.us-west-2.compute.internal",
+  "KeyName": "arti",
+  "SecurityGroups": [
+    {
+      "GroupName": "launch-wizard-14",
+      "GroupId": "sg-0d372a2e57caae6c5"
+    }
+  ],
+  "ClientToken": "",
+  "SubnetId": "subnet-13bf1574",
+  "InstanceType": "t2.micro",
+  "NetworkInterfaces": [
+    {
+      "Status": "in-use",
+      "MacAddress": "02:6b:b7:86:47:16",
+      "SourceDestCheck": true,
+      "VpcId": "vpc-3f990858",
+      "Description": "",
+      "NetworkInterfaceId": "eni-0ef7846e1e773da12",
+      "PrivateIpAddresses": [
+        {
+          "PrivateDnsName": "ip-172-31-19-50.us-west-2.compute.internal",
+          "PrivateIpAddress": "172.31.19.50",
+          "Primary": true,
+          "Association": {
+            "PublicIp": "54.191.5.109",
+            "PublicDnsName": "ec2-54-191-5-109.us-west-2.compute.amazonaws.com",
+            "IpOwnerId": "amazon"
+          }
+        }
+      ],
+      "PrivateDnsName": "ip-172-31-19-50.us-west-2.compute.internal",
+      "Attachment": {
+        "Status": "attached",
+        "DeviceIndex": 0,
+        "DeleteOnTermination": true,
+        "AttachmentId": "eni-attach-0ec13d36d8a8093c8",
+        "AttachTime": "2019-10-14T05:18:01.000Z"
+      },
+      "Groups": [
+        {
+          "GroupName": "launch-wizard-14",
+          "GroupId": "sg-0d372a2e57caae6c5"
+        }
+      ],
+      "Ipv6Addresses": [],
+      "OwnerId": "559247241480",
+      "PrivateIpAddress": "172.31.19.50",
+      "SubnetId": "subnet-13bf1574",
+      "Association": {
+        "PublicIp": "54.191.5.109",
+        "PublicDnsName": "ec2-54-191-5-109.us-west-2.compute.amazonaws.com",
+        "IpOwnerId": "amazon"
+      }
+    }
+  ],
+  "SourceDestCheck": true,
+  "Placement": {
+    "Tenancy": "default",
+    "GroupName": "",
+    "AvailabilityZone": "us-west-2b"
+  },
+  "Hypervisor": "xen",
+  "BlockDeviceMappings": [
+    {
+      "DeviceName": "/dev/xvda",
+      "Ebs": {
+        "Status": "attached",
+        "DeleteOnTermination": true,
+        "VolumeId": "vol-00f4fd49aefac20a0",
+        "AttachTime": "2019-10-14T05:18:01.000Z"
+      }
+    }
+  ],
+  "Architecture": "x86_64",
+  "RootDeviceType": "ebs",
+  "RootDeviceName": "/dev/xvda",
+  "VirtualizationType": "hvm",
+  "Tags": [
+    {
+      "Value": "CloudburstTest",
+      "Key": "Name"
+    }
+  ],
+  "AmiLaunchIndex": 0
+}
+

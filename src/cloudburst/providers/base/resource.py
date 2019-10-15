@@ -1,17 +1,12 @@
 """
-Baseclass for Resource
-
-This class is intended to transform returned information about a given Service's resources
-into properties to homogenize the format cross-cloud
+Baseclass for a resource
 """
 
-from abc import ABC, abstractmethod
-from cloudburst.parser.types import HEURISTICS_ATTR
-
+import typing
 
 class ResourceMeta(type):
     """
-    Metaclass to register resource classes
+    Metaclass to create a registry of generated resources
     """
     registry = []
 
@@ -20,14 +15,8 @@ class ResourceMeta(type):
         ResourceMeta.registry.append(clsobj)
         return clsobj
 
-
-class Resource(ABC, metaclass=ResourceMeta):
-    def __init__(self):
-        return
-
-    # TODO @davis this is an ABC so sync up with colin on what the proper base class we will be using for these bois
-    @classmethod
-    def get_heuristic_fns(cls) -> list:
-        if hasattr(cls, HEURISTICS_ATTR):
-            return getattr(cls, HEURISTICS_ATTR)
-        return []
+class AWSResource(metaclass=ResourceMeta):
+    def __init__(self, nt):
+        self.__name__ == type(nt).__name__
+        for field in nt._fields:
+            setattr(self, field, getattr(nt, field))
