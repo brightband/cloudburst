@@ -5,6 +5,7 @@ EC2 Resource for AWS provider
 from cloudburst.providers.base import Service
 from cloudburst.utils.resource_factory import aws_factory 
 from cloudburst.utils.errors import NoResourcesError
+from cloudburst.utils.utils import aws_paginator
 
 import boto3
 
@@ -28,15 +29,7 @@ class EC2Instance(Service):
         return self._client
 
     def fetch_all(self):
-        resps = []
-        next_token = ""
-        while True:
-            resp = self.client.describe_instances(NextToken=next_token)
-            resps.append(resp)
-            if 'NextToken' in resp:
-                next_token = resp['NextToken']
-            else:
-                break
+        resps = aws_paginator(self.client.describe_instances)
 
         # Iterate over all fetched response objects from EC2, if we have
         # a lot of resources we'll have multiple responses due to pagination
@@ -61,7 +54,7 @@ class EC2Instance(Service):
 
     def _resource_factory(self, resource_objs):
         for resource in resource_objs:
-            self._resources.append(aws_factory('ec2_instance', resource))
+            self._resources.append(aws_factory(type(self).__name__, resource))
 
 if __name__ == "__main__":
     sess = boto3.session.Session()

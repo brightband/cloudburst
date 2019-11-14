@@ -3,7 +3,9 @@
 PYTHON_VERSION ?= python3
 
 test-unit:
-	python3 -m pytest -s tests/unit/*.py
+	python3 -m pytest -s tests/unit/*.py --cov-report term-missing --cov=cloudburst
+
+test: test-unit
 
 publish: test
 
