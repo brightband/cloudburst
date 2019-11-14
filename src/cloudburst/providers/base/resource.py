@@ -1,13 +1,9 @@
 """
-Baseclass for Resource
-
-This class is intended to transform returned information about a given Service's resources
-into properties to homogenize the format cross-cloud
+Baseclass for a resource
 """
 
-from abc import ABC, abstractmethod
+import typing
 from cloudburst.parser.types import HEURISTICS_ATTR
-
 
 OPS_ATTR = "_op_codes"
 
@@ -21,6 +17,11 @@ def register_op(op_name: str):
 
 
 class ResourceMeta(type):
+    """
+    Metaclass to create a registry of generated resources
+    """
+    registry = []
+
     def __new__(cls, clsname, bases, clsdict):
         clsobj = super().__new__(cls, clsname, bases, clsdict)
         ResourceMeta._config_op_codes(clsobj)
@@ -51,6 +52,13 @@ class Resource(metaclass=ResourceMeta):
         if hasattr(cls, HEURISTICS_ATTR):
             return getattr(cls, HEURISTICS_ATTR)
         return []
+
+
+class AWSResource(metaclass=ResourceMeta):
+    def __init__(self, nt):
+        self.__name__ == type(nt).__name__
+        for field in nt._fields:
+            setattr(self, field, getattr(nt, field))
 
 
 """

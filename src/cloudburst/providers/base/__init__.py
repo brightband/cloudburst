@@ -1,3 +1,2 @@
-from .resource import Resource
-from .operator import Operator
+from .resource import AWSResource
 from .service import Service
