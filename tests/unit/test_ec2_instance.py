@@ -1,5 +1,6 @@
 import os
-from unittest import TestCase
+import json
+from unittest import TestCase, mock
 
 import boto3
 import botocore
@@ -20,7 +21,11 @@ class TestEC2Instance(TestCase):
     def test_client(self):
         assert type(self.resource.client).__name__ == 'EC2'
 
-    def test_fetch_all(self):
+    @mock.patch('cloudburst.providers.aws.ec2_instance.aws_paginator')
+    def test_fetch_all(self, paginator_mock):
+        with open(os.path.join(MYPATH, TEST_FILE), 'r') as tf:
+            paginator_mock.return_value = json.loads(tf.read())
+
         self.resource.fetch_all()
         assert isinstance(self.resource.resources, list)
         assert type(self.resource.resources[0]).__name__ == 'EC2Instance'
