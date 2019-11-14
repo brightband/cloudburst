@@ -7,7 +7,7 @@ from unittest import TestCase
 import json
 import os
 
-from cloudburst.utils.resource_factory import AWS
+from cloudburst.utils.resource_factory import aws_factory
 
 TEST_FILE = "test-fixtures/test_ec2.json"
 TEST_SERVICE = "EC2"
@@ -17,10 +17,9 @@ class TestAWSResourceFactory(TestCase):
     def setUp(self):
         with open(os.path.join(MYPATH, TEST_FILE), "r") as tf:
             self._test_object = json.load(tf)
-        self._generator = AWS(TEST_SERVICE)
 
     def test_generate(self):
-        t = self._generator.generate(self._test_object)
+        t = aws_factory('ec2', self._test_object)
 
         # We do not need to check the exhaustive set of fields from
         # test-fixtures, but we should check if nested and non-nested

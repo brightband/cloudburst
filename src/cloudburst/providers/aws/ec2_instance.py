@@ -54,7 +54,7 @@ class EC2Instance(Service):
 
     def _resource_factory(self, resource_objs):
         for resource in resource_objs:
-            self._resources.append(aws_factory('ec2_instance', resource))
+            self._resources.append(aws_factory(type(self).__name__, resource))
 
 if __name__ == "__main__":
     sess = boto3.session.Session()

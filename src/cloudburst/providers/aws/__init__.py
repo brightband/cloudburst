@@ -12,4 +12,4 @@ This has the added benefit of allowing the providers to be specified in their ow
 files for clarity in the filesystem tree
 """
 
-from .ec2 import EC2
+from .ec2_instance import *

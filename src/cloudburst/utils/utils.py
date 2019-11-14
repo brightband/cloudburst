@@ -22,7 +22,7 @@ def datetime_handler(dt):
         return dt.isoformat()
     raise TypeError("Unknown type")
 
-def aws_paginator(fn, *args, **kwargs)
+def aws_paginator(fn, *args, **kwargs):
     """
     Iterative paginator for AWS resources. Uses the
     common NextToken pagination scheme used in many

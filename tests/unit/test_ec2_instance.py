@@ -1,0 +1,27 @@
+import os
+from unittest import TestCase
+
+import boto3
+import botocore
+
+from cloudburst.providers.aws import EC2Instance
+
+TEST_FILE = "test-fixtures/test_responses.json"
+MYPATH = os.path.dirname(os.path.abspath(__file__))
+
+class TestEC2Instance(TestCase):
+    def setUp(self):
+        sess = boto3.session.Session()
+        self.resource = EC2Instance(sess)
+
+    def test_resources(self):
+        assert self.resource.resources == []
+
+    def test_client(self):
+        assert type(self.resource.client).__name__ == 'EC2'
+
+    def test_fetch_all(self):
+        self.resource.fetch_all()
+        assert isinstance(self.resource.resources, list)
+        assert type(self.resource.resources[0]).__name__ == 'EC2Instance'
+        print(type(self.resource.resources[0]).__name__)
