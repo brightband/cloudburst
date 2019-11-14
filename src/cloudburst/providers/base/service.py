@@ -4,6 +4,7 @@ Baseclass for service
 
 from cloudburst.parser.types import HEURISTICS_ATTR
 
+
 class ServiceMeta(type):
     """
     Metaclass to handle the registries of the service class.
@@ -22,6 +23,10 @@ class ServiceMeta(type):
 
 class Service(metaclass=ServiceMeta):
     def __init__(self):
+        pass
+
+    @classmethod
+    def TERMINATE(cls, resource):
         pass
 
     @classmethod
