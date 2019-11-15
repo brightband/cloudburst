@@ -19,7 +19,6 @@ import boto3
 from cloudburst.providers.base.service import Service
 from typing import Callable, Union, List
 
-
 CONFIG_NAME = "sample_config.py"
 
 CURR_PATH = os.path.realpath(__file__)
