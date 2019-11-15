@@ -30,9 +30,12 @@ class TestUtils(TestCase):
         self.assertRaises(ValueError, aws_paginator, fn, NextToken='a')
 
         def fn2(NextToken=None):
+            # On first run, pass the response object with NextToken defined back
             if NextToken == None:
                 with open(os.path.join(MYPATH, "test-fixtures/test_response_nexttoken.json"), 'r') as tf:
                     return json.loads(tf.read())
+            # On the second run, pass the response object with no NextToken to
+            # prevent an infinte loop
             else:
                 return fn()
 

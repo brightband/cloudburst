@@ -2,19 +2,22 @@
 EC2 Resource for AWS provider
 """
 
-from cloudburst.providers.base import Service, opcode
+from cloudburst.providers.base import AWSService, opcode
 from cloudburst.utils.resource_factory import aws_factory 
 from cloudburst.utils.errors import NoResourcesError
 from cloudburst.utils.utils import aws_paginator
 
 import boto3
 
-
-class EC2Instance(Service):
-    def __init__(self, session):
-        self._session = session
-        self._resources = []
-        self._client = None
+class EC2Instance(AWSService):
+    @property
+    def client(self):
+        """
+        Lazy-load our client object
+        """
+        if self._client is None:
+            self._client = self._session.client('ec2')
+        return self._client
 
     @opcode
     def TERMINATE(self, resource):
@@ -24,18 +27,6 @@ class EC2Instance(Service):
             ]
         )
 
-    @property
-    def resources(self):
-        return self._resources
-
-    @property
-    def client(self):
-        """
-        Lazy-load our client object
-        """
-        if self._client is None:
-            self._client = self._session.client('ec2')
-        return self._client
 
     def fetch_all(self):
         resps = aws_paginator(self.client.describe_instances)
@@ -66,8 +57,6 @@ class EC2Instance(Service):
             r = aws_factory(type(self).__name__, resource)
             setattr(r, "__id__", r.InstanceId)
             self._resources.append(r)
-
-
 
 if __name__ == "__main__":
     sess = boto3.session.Session()

@@ -67,17 +67,34 @@ class Service(metaclass=ServiceMeta):
         """
         Resources property that must exist for the service
         """
-        pass
+        raise NotImplementedError("Service object needs to implement a resources property")
 
     def fetch_all(self):
         """
         Fetch all of the resources for the service
         """
-        pass
+        raise NotImplementedError("Service object needs to implement fetch_all logic")
 
     def resource_factory(self, resource_objs):
         """
         Factory for generating dynamic Resource objects
         """
-        pass
+        raise NotImplementedError("Service object needs to implement a resource_factory")
 
+
+class AWSService(Service):
+    def __init__(self, session):
+        self._session = session
+        self._resources = []
+        self._client = None
+
+    @property
+    def resources(self):
+        return self._resources
+
+    @property
+    def client(self):
+        """
+        Lazy-load our client object
+        """
+        raise NotImplementedError("AWSService object needs to implement a client property")

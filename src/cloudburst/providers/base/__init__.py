@@ -1,2 +1,2 @@
 from .resource import AWSResource
-from .service import Service, opcode
+from .service import Service, AWSService, opcode
