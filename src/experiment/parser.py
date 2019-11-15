@@ -77,10 +77,10 @@ def execute_heuristic_fns(service_instances: list):
         fns = service.get_heuristic_fns()
         for resource in service.resources:
             for fn in fns:
-                execute_heuristic(fn, service.__class__, resource)
+                execute_heuristic(fn, service, service.__class__, resource)
 
 
-def execute_heuristic(heuristic_fn, service_class, resource):
+def execute_heuristic(heuristic_fn, service, service_class, resource):
     """
     Behold -- feast your eyes upon this top shelf black magic, courtesy of the masterclass Python wizards of Brightband.
 
@@ -116,8 +116,11 @@ def execute_heuristic(heuristic_fn, service_class, resource):
 
     if return_val is not None:
         # TODO implement dry-run here, and defer executing the operation if it is set
-        Recorder.resource_operation_map[resource] = return_val.__name__
-        return_val(resource)  # Execute the operation
+        #Recorder.resource_operation_map[resource] = return_val.__name__
+        real_fn = getattr(service_class, return_val.__name__)
+        print("the val of the real fn is: " + return_val.__name__)
+        real_fn(service, resource)
+        #return_val(resource)  # Execute the operation
 
 
 if __name__ == "__main__":
@@ -141,4 +144,5 @@ if __name__ == "__main__":
     execute_heuristic_fns(services)
 
     # TODO cleanup? Close session or something?
+    print(Recorder.resource_operation_map)
 

@@ -33,6 +33,9 @@ def aws_factory(resource_type, resource_obj):
     # decoding it returns the output of the provided function instead of
     # the decoded dictionary
     def dict_caster(d):
+        def TERMINATE():
+            pass
+        d['TERMINATE'] = TERMINATE
         return namedtuple(resource_type, d.keys())(*d.values())
 
     json_obj = json.dumps(resource_obj, default=datetime_handler)

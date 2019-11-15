@@ -16,6 +16,13 @@ class EC2Instance(Service):
         self._resources = []
         self._client = None
 
+    def TERMINATE(self, resource):
+        self._client.terminate_instances(
+            InstanceIds=[
+                resource.InstanceId
+            ]
+        )
+
     @property
     def resources(self):
         return self._resources
@@ -55,7 +62,10 @@ class EC2Instance(Service):
 
     def _resource_factory(self, resource_objs):
         for resource in resource_objs:
-            self._resources.append(aws_factory(type(self).__name__, resource))
+            r = aws_factory('ec2_instance', resource)
+            self._resources.append(r)
+            
+
 
 
 

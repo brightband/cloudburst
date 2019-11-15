@@ -25,9 +25,6 @@ class Service(metaclass=ServiceMeta):
     def __init__(self):
         pass
 
-    @classmethod
-    def TERMINATE(cls, resource):
-        pass
 
     @classmethod
     def get_heuristic_fns(cls) -> list:
