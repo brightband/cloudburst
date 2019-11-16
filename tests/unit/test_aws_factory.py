@@ -13,6 +13,7 @@ TEST_FILE = "test-fixtures/test_ec2.json"
 TEST_SERVICE = "EC2"
 MYPATH = os.path.dirname(os.path.abspath(__file__))
 
+
 class TestAWSResourceFactory(TestCase):
     def setUp(self):
         with open(os.path.join(MYPATH, TEST_FILE), "r") as tf:

@@ -9,6 +9,7 @@ from cloudburst.utils.utils import aws_paginator
 
 import boto3
 
+
 class EC2Instance(Service):
     def __init__(self, session):
         self._session = session
@@ -55,6 +56,8 @@ class EC2Instance(Service):
     def _resource_factory(self, resource_objs):
         for resource in resource_objs:
             self._resources.append(aws_factory(type(self).__name__, resource))
+
+
 
 if __name__ == "__main__":
     sess = boto3.session.Session()

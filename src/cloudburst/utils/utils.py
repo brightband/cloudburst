@@ -1,5 +1,6 @@
 import datetime
 
+
 def datetime_handler(dt):
     """
     Handle datetime conversion for non-standard datetime
@@ -21,6 +22,7 @@ def datetime_handler(dt):
     if isinstance(dt, datetime.datetime):
         return dt.isoformat()
     raise TypeError("Unknown type")
+
 
 def aws_paginator(fn, *args, **kwargs):
     """

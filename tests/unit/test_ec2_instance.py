@@ -10,6 +10,7 @@ from cloudburst.providers.aws import EC2Instance
 TEST_FILE = "test-fixtures/test_responses.json"
 MYPATH = os.path.dirname(os.path.abspath(__file__))
 
+
 class TestEC2Instance(TestCase):
     def setUp(self):
         sess = boto3.session.Session()
