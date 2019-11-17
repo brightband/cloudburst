@@ -6,6 +6,13 @@ import json
 from collections import namedtuple
 from cloudburst.utils.utils import datetime_handler
 
+class Resource():
+    def __getattr__(self, attr):
+        if attr not in dir(self):
+            # TODO: Record this somewhere so the user knows they tried to
+            #       access a field that doesnt exist
+            return Resource()
+
 def aws_factory(resource_type, resource_obj): 
     """
     Generate a Resource object from the provided representation
@@ -29,7 +36,7 @@ def aws_factory(resource_type, resource_obj):
     if type(resource_obj) not in (list, dict):
         return resource_obj
 
-    new_obj = type('', (object,), {}) if type(resource_obj) is dict else []
+    new_obj = type('', (Resource,object), {})() if type(resource_obj) is dict else []
 
     for element in resource_obj:
         if type(resource_obj) is dict:
