@@ -85,6 +85,8 @@ class S3Bucket(AWSService):
             bucket_obj['AnalyticsConfiguration'] = \
                     self._fetch_bucket_analytics_configuration(bucket)
             bucket_obj['CORS'] = self._fetch_bucket_cors(bucket)
+            bucket_obj['Encryption'] = self._fetch_bucket_encryption(bucket)
+
             
 
 if __name__ == "__main__":
