@@ -24,6 +24,14 @@ class EC2Instance(Service):
             ]
         )
 
+    @opcode
+    def STOP(self, resource):
+        self.client.stop_instances(
+            InstanceIds=[
+                resource.InstanceId
+            ]
+        )
+
     @property
     def resources(self):
         return self._resources
