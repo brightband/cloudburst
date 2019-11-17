@@ -30,20 +30,6 @@ def test_heuristic_fn_2():
     pass
 """
 
-CODE_STR_TEST_OPCODE_REGISTRY = """
-print('a')
-from cloudburst.providers.base import Service, opcode
-print('b')
-class ServiceAA(Service):
-    @opcode
-    def opcode_1(self, resource): pass
-
-    @opcode
-    def opcode_2(self, resource): pass
-
-class ServiceBB(Service): pass
-"""
-
 class TestServiceMeta(TestCase):
     def test_service_registry(self):
         """
