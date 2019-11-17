@@ -1,9 +1,11 @@
 .PHONY: test test-unit develop publish clean
 
+TESTS ?= tests/*.py
+
 PYTHON_VERSION ?= python3
 
 test:
-	$(PYTHON_VERSION) -m pytest -s tests/*.py --cov-report term-missing --cov=cloudburst
+	$(PYTHON_VERSION) -m pytest -s $(TESTS) --cov-report term-missing --cov=cloudburst
 
 publish: test
 
