@@ -29,4 +29,3 @@ class TestEC2Instance(TestCase):
 
         self.resource.fetch_all()
         assert isinstance(self.resource.resources, list)
-        print(type(self.resource.resources[0]).__name__)

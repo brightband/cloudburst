@@ -4,6 +4,16 @@ Script for running cloudburst commands from the CLI
 
 This file should contain no business logic
 """
+import argparse
+
+from cloudburst.parser.executor import execute
+
+def setup_argparse(parser):
+    parser.add_argument("--config", "-c", type=str, help="Filepath for cloudburst configuration", required=True)
+    parser.add_argument("--dryrun", "-d", action="store_true", help="Dry run the specified configuration")
 
 if __name__ == "__main__":
-    print("bang")
+    parser = argparse.ArgumentParser()
+    setup_argparse(parser)
+    args = parser.parse_args()
+    execute(args.config, args.dryrun)

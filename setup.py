@@ -33,6 +33,9 @@ setup(
     url = "https://www.brightband.io/products/cloudburst",
     keywords = "AWS garbage collection collector cloud cost manager management",
     package_dir={"": "src"},
+    scripts = [
+        "src/bin/cloudburst"
+    ],
     packages=find_packages(
         where="src",
         exclude=["docs", "tests*", "bin"],

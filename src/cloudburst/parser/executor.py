@@ -16,7 +16,7 @@ import os
 import sys
 import boto3
 
-from cloudburst.providers.base.service import Service
+from cloudburst.providers.base.service import Service, OPS_ATTR
 from typing import Callable, Union, List
 
 CONFIG_NAME = "sample_config.py"
@@ -76,10 +76,10 @@ def execute_heuristic_fns(service_instances: list):
         fns = service.get_heuristic_fns()
         for resource in service.resources:
             for fn in fns:
-                execute_heuristic(fn, service.__class__, resource)
+                execute_heuristic(fn, service, resource)
 
 
-def execute_heuristic(heuristic_fn, service_class, resource):
+def execute_heuristic(heuristic_fn, service, resource):
     """
     Behold -- feast your eyes upon this top shelf black magic, courtesy of the masterclass Python wizards of Brightband.
 
@@ -102,12 +102,21 @@ def execute_heuristic(heuristic_fn, service_class, resource):
     operation such as EC2Service.TERMINATE), this operation is executed and recorded.
 
     :param heuristic_fn: A function pointer to the user's defined heuristic
-    :param service_class: A Service subclass (ie EC2Instance)
+    :param service: A Service instance
     :param resource: A resource object (ie the output of a resource factory)
     :return: None
     """
+    service_class = service.__class__
     service_name = service_class.__name__
+
     previous_ref = heuristic_fn.__globals__[service_name]
+
+    # Attach references to all op codes from the resource to the Service instance
+    for op_fn in service.ops_fns:
+        # real_fn is the pointer to the actual fn we want to call on the Service instance
+        fn_name = op_fn.__name__
+        real_fn = getattr(service, fn_name)  
+        setattr(resource, fn_name, real_fn)
 
     heuristic_fn.__globals__[service_name] = resource  # Inject the resource
     return_val = heuristic_fn()  # Execute the heuristic and capture the return value
@@ -115,20 +124,18 @@ def execute_heuristic(heuristic_fn, service_class, resource):
 
     if return_val is not None:
         # TODO implement dry-run here, and defer executing the operation if it is set
-        Recorder.resource_operation_map[resource] = return_val.__name__
+        Recorder.resource_operation_map[resource.__id__] = return_val.__name__
         return_val(resource)  # Execute the operation
+    else:
+        Recorder.resource_operation_map[resource.__id__] = "NO OP"
 
-
-if __name__ == "__main__":
-    # TODO implement CLI args
-    # if len(sys.argv) != 2:
-    #     raise Exception("Executor must be passed the absolute directory of config file")
-    code_str = load_config_str(CONFIG_PATH)
+def execute(config_path, dry_run=False, aws_secret=None, aws_key=None):
+    code_str = load_config_str(config_path)
 
     # Exec'ing the config file will cause the code to be run by the interpreted, and loaded into this global namespace
     # This will cause all of the decorators in the heuristic functions to bind themselves to their associated Service
     # classes, which are then accessible via Service.get_heuristic_fns
-    exec(code_str)
+    exec(code_str, globals())
 
     # Bootstrap, which involves
     # 1) Creating a boto3 session
@@ -140,4 +147,10 @@ if __name__ == "__main__":
     execute_heuristic_fns(services)
 
     # TODO cleanup? Close session or something?
-
+    # apparently the bar for python is so low, that boto3 had to implement auto cleanup
+    import pprint
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint("Run results:\n")
+    pp.pprint("-------------------------------------------------------")
+    pp.pprint(Recorder.resource_operation_map)
+    pp.pprint("-------------------------------------------------------")

@@ -2,7 +2,7 @@
 EC2 Resource for AWS provider
 """
 
-from cloudburst.providers.base import Service
+from cloudburst.providers.base import Service, opcode
 from cloudburst.utils.resource_factory import aws_factory 
 from cloudburst.utils.errors import NoResourcesError
 from cloudburst.utils.utils import aws_paginator
@@ -15,6 +15,14 @@ class EC2Instance(Service):
         self._session = session
         self._resources = []
         self._client = None
+
+    @opcode
+    def TERMINATE(self, resource):
+        self.client.terminate_instances(
+            InstanceIds=[
+                resource.InstanceId
+            ]
+        )
 
     @property
     def resources(self):
@@ -55,7 +63,9 @@ class EC2Instance(Service):
 
     def _resource_factory(self, resource_objs):
         for resource in resource_objs:
-            self._resources.append(aws_factory(type(self).__name__, resource))
+            r = aws_factory(type(self).__name__, resource)
+            setattr(r, "__id__", r.InstanceId)
+            self._resources.append(r)
 
 
 
