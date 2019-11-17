@@ -29,5 +29,4 @@ class TestEC2Instance(TestCase):
 
         self.resource.fetch_all()
         assert isinstance(self.resource.resources, list)
-        assert type(self.resource.resources[0]).__name__ == 'EC2Instance'
         print(type(self.resource.resources[0]).__name__)
