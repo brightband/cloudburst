@@ -1,7 +1,6 @@
 .PHONY: test test-unit develop publish clean
 
 TESTS ?= tests/*.py
-
 PYTHON_VERSION ?= python3
 
 test:
