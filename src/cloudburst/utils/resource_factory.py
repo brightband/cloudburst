@@ -26,14 +26,15 @@ def aws_factory(resource_type, resource_obj):
         SyntaxError:            If the provided object syntax is not able
                                 to be derived by our generator
     """
-    # This may seem unintuitive, but what is happening here is that 
-    # we are transforming the resource dictionary object into json to
-    # leverage the object_hook function callback baked into the json
-    # library. What this does is every time it encounters a dict while
-    # decoding it returns the output of the provided function instead of
-    # the decoded dictionary
-    def dict_caster(d):
-        return namedtuple(resource_type, d.keys())(*d.values())
+    if type(resource_obj) not in (list, dict):
+        return resource_obj
 
-    json_obj = json.dumps(resource_obj, default=datetime_handler)
-    return json.loads(json_obj, object_hook=dict_caster) 
+    new_obj = type('', (object,), {}) if type(resource_obj) is dict else []
+
+    for element in resource_obj:
+        if type(resource_obj) is dict:
+            setattr(new_obj, element, aws_factory(resource_type, resource_obj[element]))
+        else:
+            new_obj.append(aws_factory(resource_type, element))
+
+    return new_obj
