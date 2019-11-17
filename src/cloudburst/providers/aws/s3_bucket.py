@@ -88,7 +88,6 @@ class S3Bucket(AWSService):
             bucket_obj['Encryption'] = self._fetch_bucket_encryption(bucket)
 
             
-
 if __name__ == "__main__":
     sess = boto3.Session()
 

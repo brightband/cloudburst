@@ -27,7 +27,6 @@ class EC2Instance(AWSService):
             ]
         )
 
-
     def fetch_all(self):
         resps = aws_paginator(self.client.describe_instances)
 
