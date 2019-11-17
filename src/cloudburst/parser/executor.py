@@ -72,14 +72,8 @@ def execute_heuristic_fns(service_instances: list):
     :param service_instances: A list of Service instances
     :return: None
     """
-    # debug
-    print("Executing heuristic fns for service instances:\n{}".format(service_instances))
-    # end debug
     for service in service_instances:
         fns = service.get_heuristic_fns()
-        # debug
-        print("God list of heur funcs:\n{}".format(fns))
-        # end debug
         for resource in service.resources:
             for fn in fns:
                 execute_heuristic(fn, service, resource)
@@ -115,14 +109,6 @@ def execute_heuristic(heuristic_fn, service, resource):
     service_class = service.__class__
     service_name = service_class.__name__
 
-    # debug 
-#    print("locals of heuristic fn:\n{}".format(heuristic_fn.__locals__))
-    import pprint
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint("globals of heuristic fn:\n{}".format(heuristic_fn.__globals__))
-
-    # end debug
-
     previous_ref = heuristic_fn.__globals__[service_name]
 
     # Attach references to all op codes from the resource to the Service instance
@@ -146,8 +132,6 @@ def execute_heuristic(heuristic_fn, service, resource):
 def execute(config_path, dry_run=False, aws_secret=None, aws_key=None):
     code_str = load_config_str(config_path)
 
-    print("loaded code str:\n" + code_str)
-
     # Exec'ing the config file will cause the code to be run by the interpreted, and loaded into this global namespace
     # This will cause all of the decorators in the heuristic functions to bind themselves to their associated Service
     # classes, which are then accessible via Service.get_heuristic_fns
@@ -170,7 +154,3 @@ def execute(config_path, dry_run=False, aws_secret=None, aws_key=None):
     pp.pprint("-------------------------------------------------------")
     pp.pprint(Recorder.resource_operation_map)
     pp.pprint("-------------------------------------------------------")
-
-
-#if __name__ == "__main__":
-#    execute("/home/cmcgrath/Documents/Work/Brightband/cloudburst/tests/test-fixtures/sample_config.py")
