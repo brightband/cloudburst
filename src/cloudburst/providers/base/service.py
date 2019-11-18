@@ -90,7 +90,8 @@ class AWSService(Service):
 
     @property
     def client(self):
-        """
-        Lazy-load our client object
-        """
         raise NotImplementedError("AWSService object needs to implement a client property")
+
+    @property
+    def supported_regions(self):
+        raise NotImplementedError("AWSService object needs to implement a property defining supported regions")
