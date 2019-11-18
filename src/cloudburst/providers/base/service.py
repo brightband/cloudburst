@@ -49,10 +49,6 @@ class Service(metaclass=ServiceMeta):
         pass
 
     @classmethod
-    def TERMINATE(cls, resource):
-        pass
-
-    @classmethod
     def get_heuristic_fns(cls) -> list:
         """
         Fetch the heuristic functions registered for the given
