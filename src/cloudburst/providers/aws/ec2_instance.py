@@ -36,7 +36,7 @@ class EC2Instance(AWSService):
         Raises:
             N/A
         """
-        self.client.terminate_instances(
+        self.client(resource.Region).terminate_instances(
             InstanceIds=[
                 resource.InstanceId
             ]
@@ -55,7 +55,6 @@ class EC2Instance(AWSService):
                                            resources.
         """
         return AWS_REGIONS
-
 
     @property
     def resources(self):
