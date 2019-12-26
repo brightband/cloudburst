@@ -13,3 +13,4 @@ files for clarity in the filesystem tree
 """
 
 from .ec2_instance import *
+from .rds_instance import *

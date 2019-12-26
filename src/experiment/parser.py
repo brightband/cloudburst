@@ -20,7 +20,7 @@ from cloudburst.providers.base.service import Service
 from typing import Callable, Union, List
 
 
-CONFIG_NAME = "sample_config.py"
+CONFIG_NAME = "sample_config_rds.py"
 
 CURR_PATH = os.path.realpath(__file__)
 CURR_PATH = "/".join(CURR_PATH.split('/')[:-1])
