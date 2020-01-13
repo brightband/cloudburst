@@ -39,9 +39,7 @@ class RDSInstance(AWSService):
             N/A
         """
         if resource.Engine == 'aurora':
-            self.client(resource.Region).stop_db_cluster(
-                DBClusterIndentifier=resource.DBClusterIdentifier
-            )
+            pass  # Aurora instances will be handled through the RDSCluster service class
         else:
             self.client(resource.Region).stop_db_instance(
                 DBInstanceIdentifier=resource.DBInstanceIdentifier
@@ -150,3 +148,4 @@ class RDSInstance(AWSService):
         r = aws_factory(type(self).__name__, resource)
         setattr(r, "__id__", r.DBInstanceIdentifier)
         self.resources.append(r)
+
